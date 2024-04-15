@@ -50,8 +50,8 @@ void setup(){
 
 void loop(){
   UpdataTimeIfNextSecond();
-  const bool back_setting_btn = !digitalRead(button_input_mode_back_pin_);
-  const bool front_adding_btn = !digitalRead(button_input_add_front_pin_);
+  const bool back_setting_btn = analogRead(button_input_mode_back_pin_) == 0;
+  const bool front_adding_btn = analogRead(button_input_add_front_pin_) == 0;
   ProcessCleanTube(back_setting_btn, front_adding_btn);
   ProcessSettingTime(back_setting_btn, front_adding_btn);
   delay(20);
