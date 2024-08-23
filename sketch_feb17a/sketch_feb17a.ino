@@ -88,6 +88,15 @@ void UpdataTimeIfNextSecond(){
   minut_.SetClockTime(now.minute);
   hour_.SetClockTime(now.hour);
   Serial.println(String(now.hour) + ":" + String(now.minute) + ":" + String(now.second));
+
+  //一天過後, 將時間設定慢固定幾秒
+  if(now.hour == 0 && now.minute == 0 && now.second == 57){
+    Ds1302::DateTime now;
+    now.hour = 0;
+    now.minute = 0;
+    now.second = 0;
+    real_time_clock_.setDateTime(&now);
+  }
 }
 
 void SetRealTimeClock(){
