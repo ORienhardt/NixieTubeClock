@@ -104,6 +104,7 @@ Note: Capacitors in series increase the voltage capacity, parallel increase capa
 在豆腐頭剛進入時，先經過保險絲後，接著就要加個二極體, 防止豆腐頭出什麼毛病，後續才經過電容。
 When the power first comes from the charger, it goes through a fuse, followed by a diode to protect against any issues from the charger, and then through the capacitors.
 ![S__36790275](https://github.com/user-attachments/assets/7736ab03-bee6-4d40-a085-207b7d77fb3a)
+![S__37027905_0](https://github.com/user-attachments/assets/0f40e4fb-0bc7-45ba-abf6-0a703e528fe6)
 
 
 ## step3. 製作 5V轉170V升壓模組｜Creating the 5V to 170V voltage converter Module
@@ -114,7 +115,9 @@ First, the 5V DC input (provided by the phone charger) is converted to the volta
 
 去淘寶買的升壓模組,保險起見, 可以看到照片，我把正面的接點都用絕緣膠帶貼起來, 之前就是可能焊接的接點比較大, 接電後, 就有火花, 剛開始做就看到煙火秀, 淘寶搜一下「5V-9V升170V小型升压模块」應該就找得到。
 I buy this module from Taobao. To be safe, as shown in the picture, I covered the front contacts with tape. Previously, one of the solder joints was too large, which caused sparks and a mini firework show the first time I powered it on. If you’re interested, you can search for “5V-9V to 170V small boost module” on Taobao to find it.
-![orig (1)](https://github.com/user-attachments/assets/0d38b692-e403-4f17-9fea-cf7f041721f0)
+
+![S__37027904_0](https://github.com/user-attachments/assets/f4a4b0fb-5be2-48bf-8bcf-9c342d86e2d4)
+
 
 
 ## step 4 .製作DS1302模組 | Building the DS1302 Module
@@ -134,6 +137,11 @@ For Arduino users, It’s included in my GitHub repository.
 
 
 
+如圖，我將買好的模組解焊後，焊在板子上，DS1302的模組有 鈕扣電池、32767Hz的石英振蕩器、計算時間的IC 本身。
+As shown in picture, I desoldered the purchased module and soldered it on the board. The DS1302 module includes a button cell battery, a 32,767 Hz quartz oscillator, and a time-keeping IC.
+![S__37027915_0](https://github.com/user-attachments/assets/2c005f79-db04-4b9b-956b-f9e9ac6be0c6)
+
+
 ## step5. 做個保險絲 | Adding a Fuse
 
 這步應該是在最前面才對, 就是在5Ｖ豆腐頭進入後就應該經過這個保險絲, 因為做完這個時鐘，半年了才想說寫個文章，當初怎麼個配線流程都忘了，最後會再寫個總配線流程, 但我當初覺得保險絲盒放在正中間有種和諧感, 就放在中間了。
@@ -144,8 +152,9 @@ For anyone with a background in electronics, the setup in the image below should
 
 而保險絲該配多大的問題，問gpt吧，只是盡量不要配太細的，比如我之前是計算每個管子耗多少電流算出來的，但保險絲比如買個0.2A的反而可能讓改保險絲產生電阻，進而這邊產生壓降，導致arduino板、升壓模組等造成一系列問題，所以這裡就改用成2A，實際上多少的話，我就沒經驗了，做韌體的應該就很懂了。
 As for choosing the right fuse rating, it’s best to consult resources like GPT for advice, but avoid using one that’s too low. I originally calculated the current each tube would consume and tried a 0.2A fuse, but it caused some issues. The fuse generated resistance, which led to a voltage drop and caused problems with the Arduino board and boost module. So, I replaced it with a 2A fuse. I don’t have much experience here, but those working in firmware or electronics likely know better.
+![S__37027906_0](https://github.com/user-attachments/assets/8df6d887-f09f-449d-8ed6-3e75ffbd98db)
 
-![orig (2)](https://github.com/user-attachments/assets/6f9d9261-d698-442d-b408-f7fc35acb73c)
+
 
 
 ## step6.輝光管的IC控制| IC Control for Nixie Tubes
@@ -160,7 +169,11 @@ Each nixie tube also requires a 10K resistor. Below is an image I found showing 
 
 ![15611377040_c15f4eb0b9_o-2](https://github.com/user-attachments/assets/9ca2292b-cf2c-4ac0-84a6-3bf781130575)
 - [以上圖片連結](https://www.plingboot.com/arduino-nixie-gps-clock-part-2/)
-  
+
+可以看到圖片上的，是74HC595，而一個可以控制2個K155ID1，進而控制兩個管子。
+You can see in the picture that it’s a 74HC595, which controls two K155ID1 chips, and those K155ID1 control two tubes.
+  ![S__37027910_0](https://github.com/user-attachments/assets/801da5ae-00f2-4caa-9962-8466912223fb)
+
 74HC595使用方式、原理, Youtube收尋, 講的蠻清楚的：【Arduino教學】實作08-74HC595(上)
 for english video, you can search "how to use 74HC595"
 
@@ -169,6 +182,7 @@ for english video, you can search "how to use 74HC595"
 ***Note: In the diagram below, "d" represents the digital output pins on the Nano, outputting 0 or 1. Since each 74HC595 shift register needs 3 pins, controlling hours, minutes, and seconds requires 9 pins in total. Adding the RTC module can lead to insufficient pins for the LED colon display.
 To work around this, I used one of the hour control pins to share with the LED. The hour control only updates once per hour, so after it’s used, the pin can control the LED without issues. I also heard that all of the 74HC595 pins can share, but I didn’t do this in my build.
 ![orig (4)](https://github.com/user-attachments/assets/f79535f7-3457-4811-bfcc-703933555540)
+![S__37027910_0](https://github.com/user-attachments/assets/d4c44734-689e-4280-af34-111a5f8d37cf)
 
 
 ## step8. 製作輝光管支架｜Making the Nixie Tube Stand
@@ -185,6 +199,17 @@ As for the tube sockets, they not only extend the tubes' lifespan but also provi
 
 ![orig (4)](https://github.com/user-attachments/assets/57d29c63-13c2-4e1f-84be-befa49889f07)
 
+可以看到我用鉗子掰彎螺絲的痕跡，輝光管座的前後，使用兩個螺帽固定
+You can see marks from using pliers to bend the screws. The Nixie tube socket is secured front and back with two nuts.
+![S__37027903_0](https://github.com/user-attachments/assets/593793f8-9f2b-4d3b-b2d3-ba11920a0775)
+
+
+螺絲頭在PCB底部的樣子
+screw head at buttom of PCB
+![S__37027922_0](https://github.com/user-attachments/assets/a58173db-1d54-4977-8db7-7ef2be759b53)
+
+
+
 
 
 ## step9. 配線 | Wiring
@@ -197,6 +222,8 @@ In the first version of the wiring, there was no winding wire. Later, after repl
 
 ![orig (2)](https://github.com/user-attachments/assets/ebab3a19-8043-4458-a61b-5f92bc82b986)
 
+![S__37027921_0](https://github.com/user-attachments/assets/69445090-58d3-4d9c-9328-566a04181443)
+
 
 ## step 10. 製作按鍵 | Making the Buttons
 
@@ -207,6 +234,12 @@ To set the time and manually clean the tubes, I chose micro switches that feel g
 micro switch also need a resistor. Although the Nano board supposedly has internal resistors, I added an extra one for safe. The wiring connects one line to the Nano's analog input (A in), which detects whether the signal is 5V or close to 0V. You can choose a button yoe like; I picked one that matched the clock's size. However, since the pins were large, I had drill the holes in the PCB using a knife.
 
 ![81+GMLjeZYL](https://github.com/user-attachments/assets/fd728390-f505-4064-a8bc-03a3b1911e8c)
+
+對照代碼的話，可以看到我製作的兩個按鈕，會接到nano 板上的A1 A2，這裏雖然說nano 板本身可以設定內阻，但我還是有加上電阻
+Looking at the code, you can see the two buttons I made, connected to A1 and A2 on the Nano board. Although the Nano board itself can set internal resistance, I still added external resistors for insurance.
+![S__37027908_0](https://github.com/user-attachments/assets/83b2ab4c-82e3-40d7-a431-e7bb22f7bb4d)
+![S__37027920_0](https://github.com/user-attachments/assets/b84577bd-d403-4861-8f01-2661e87636f7)
+
 
 
 ## step 11.總開關的製作 | Creating the Main Power Switch
@@ -227,21 +260,23 @@ After finishing the wiring, remember to clean the entire board with alcohol. Whe
 把管子、IC、控制板都拿掉的樣子, 洗過後, 曬一下會比較安全
 I removed the tubes, ICs, and control board, cleaned everything, and let it dry completely for safety.
 
-還有LED冒號, 也是用個470歐姆的電阻+紅色LED當冒號
-For the LED colon indicator, I used a 470-ohm resistor with a red LED.
+還有LED冒號, 也是用個470歐姆的電阻+紅色LED當冒號，照片上可以看到，我使用比較粗的電線來把LED撐起來，看起來像個「電線桿」，其實這樣固定不是很穩定，但整體看時鐘管子之間較緊湊，冒號也是藏在管子中，剛做好到現在，不會彎掉，就沒在改善這問題了
+For the LED colon indicator, I used a 470-ohm resistor with a red LED. In the picture, you can see I used thicker wires to hold up the LED, making it look like a “pole.” It’s not very stable, but overall, you can see the clock tubes look more compact, with the colon tucked between them. Since it hasn’t bent since I put it together, I haven’t tried to improve this setup.
+![S__37027909_0](https://github.com/user-attachments/assets/f0e744b9-b5e7-439d-9d09-edcf142c7ae5)
 
 
 
 
-
-
-最後, 放個之前剛做完拍的照片
-Finally, here’s a photo of the completed clock right after assembly.
+最後，欣賞一下剩下的素材
+Finally, take a look at the remaining photos.
 ![orig (7)](https://github.com/user-attachments/assets/43951a69-dd6f-454e-8b76-edd13eeae783)
 ![orig (8)](https://github.com/user-attachments/assets/99d5db41-af29-4fd4-ad12-e53c4bb0fe53)
 ![orig (9)](https://github.com/user-attachments/assets/9513bffe-bc09-48ad-8181-aca6e6846dec)
-
-
+![S__37027900_0](https://github.com/user-attachments/assets/f58ccdb2-9ffd-4d37-918c-a52e1db7893a)
+![S__37027914_0](https://github.com/user-attachments/assets/66887930-8216-4a21-b4b1-47fd6b121eb7)
+![S__37027902_0](https://github.com/user-attachments/assets/ca32a1c0-396e-41c4-b617-aeea5d7420d2)
+![S__37027911_0](https://github.com/user-attachments/assets/f477af30-1540-4c95-ae09-1a0e7836c39f)
+![S__37027913_0](https://github.com/user-attachments/assets/d60680cf-4dc5-4391-a5e8-bfa0594e65b3)
 
 
 ## 總材料 | Materials List：
