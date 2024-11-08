@@ -266,7 +266,7 @@ For the LED colon indicator, I used a 470-ohm resistor with a red LED. In the pi
 
 
 
-
+---
 最後，欣賞一下剩下的素材
 Finally, take a look at the remaining photos.
 ![orig (7)](https://github.com/user-attachments/assets/43951a69-dd6f-454e-8b76-edd13eeae783)
@@ -278,7 +278,7 @@ Finally, take a look at the remaining photos.
 ![S__37027911_0](https://github.com/user-attachments/assets/f477af30-1540-4c95-ae09-1a0e7836c39f)
 ![S__37027913_0](https://github.com/user-attachments/assets/d60680cf-4dc5-4391-a5e8-bfa0594e65b3)
 
-
+---
 ## 總材料 | Materials List：
 
 - PCB板, 記得先買管子, 如果想要大隻的管子也可以, 看起來更有復古感, 如果不是跟我一樣要買小管子的人, 要先買好管子、IC、Ａrduino 等等的主要模組, 大概算一下需要的PCB需要多大, 不然就是要買那種可以裁的PCB, 還有因為我買的板子的焊點金屬比較薄, 對不熟焊槍的人, 可能會容易把PCB的焊點弄起來, 可以買下圖這種較厚一點的PCB, 可能品質更好一點, 但還是去電子材料行看看, 也能問一下材料行的人
@@ -342,7 +342,7 @@ Finally, take a look at the remaining photos.
 Most of this wiring can be cross-referenced with the code.
 
 
-
+---
 ## 最後幾點做完後發現可以改善的地方 | Final Improvements and Suggestions:
 
 1. led冒號的固定，我是直接找比較粗的鐵絲將正負極的線用熱縮管固定，現在還是還沒想到更好的方式。
@@ -357,8 +357,25 @@ Most of this wiring can be cross-referenced with the code.
 
 ![9009d5d6df61842cbda972c500350613](https://github.com/user-attachments/assets/cab8370c-bb8c-4c12-8f67-55c1c78919ad)
 
+4. 使用後發現的按鈕問題 
+Issues Observed with Button Functionality
+
+我原本使用 Nano 板提供的 5V 作為 A1 的輸入電壓，結果可能因此出現以下問題：
+4.1按鈕有時候會按下沒反應。透過 serial port monitor 檢查，發現其實有電壓輸入，但有時候無法接近 0V。這顯示出參考電壓若改用外部穩定電源，可能會更穩定。
+4.2此外，以上問題可能會導致兩個按鈕在接觸不良或特定情況下，使 Nano 板過度耗電。在我持續開啟時鐘超過半天時，有時會發生分或秒位數字無法顯示或亂跳的情況。不過，當我直接用 USB 為 Nano 板供電時，顯示恢復正常。因此推測，不應該將時鐘左邊兩個按鈕的參考電壓直接接在 Nano 板上。
+總結來說，Nano 板的電源應該專注於處理核心邏輯，例如時間獲取、控制 74HC595、按鈕讀取等工作，避免額外的負載以維持系統穩定性。
+
+Initially, I used the 5V from the Nano board as the input voltage for A1 A2, which may have led to the following issues:
+
+Sometimes, button presses don’t respond. Checking with the serial port monitor showed voltage input, but it occasionally doesn’t drop close to 0V. This suggests that the reference voltage would likely be more stable if sourced from an external, stable power supply.
+
+Additionally, the above issue may cause both buttons to draw excess current under certain conditions or poor contact, leading to power instability for the Nano. When I kept the clock running for more than half a day, sometimes the digits for minutes or seconds failed to display or showed random numbers. However, when I powered the Nano directly via USB, the display returned to normal. This suggests that the reference voltage for the two buttons on the left side of the clock should not directly rely on the Nano’s 5V.
+
+In summary, the Nano’s power supply should focus on handling core logic tasks like timekeeping, controlling the 74HC595, and reading button states, avoiding additional loads to maintain system stability.
 
 
+
+---
 
 感謝收看，有什麼錯誤資訊，或想問我的歡迎留言
 thanks for watching, if there is something wrong i say, leave the command! 
