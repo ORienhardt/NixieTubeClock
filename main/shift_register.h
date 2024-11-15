@@ -1,3 +1,5 @@
+#ifndef SHIFT_REGISTER_H
+#define SHIFT_REGISTER_H
 class ShiftRegister {
  public:
   ShiftRegister(int latch_pin, int clock_pin, int data_pin) :
@@ -13,7 +15,7 @@ class ShiftRegister {
   // 设置时钟显示，接收一个整数，左边的輝光管显示十位数，右边的輝光管显示个位数
   void SetClockTime(int time) {
     int binary_time;
-    if(time == -1){//個位數、十位數都on 代表不顯示
+    if(time == 255){//個位數、十位數都on 代表不顯示
       binary_time = 255;
     }
     else{
@@ -45,3 +47,6 @@ class ShiftRegister {
   const int data_pin_;  // Data pin  DS 資料
   int last_time_;
 };
+
+#endif // SHIFT_REGISTER_H
+
