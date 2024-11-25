@@ -6,7 +6,7 @@ namespace{
   const bool Pressed = true, Unpressed = false;
   const int button_input_mode_back_pin_ = A1;//不能只寫'1'
   const int button_input_add_front_pin_ = A2;
-  const int led_output_pin_;/*與74HC595 小時的'大平台'共用*/
+  const int led_output_pin_ = 12;/*與74HC595 小時的'大平台'共用*/
 }
 
 
